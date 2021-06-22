@@ -31,7 +31,6 @@ char *ft_string_to_binary(char *str)
 	int i;
 	char *binary_buffer;
 
-
 	binary_buffer = malloc(8*ft_strlen(str));
 	for(i=0;i<8*ft_strlen(str);i++)
 		binary_buffer[i] = (0 != (str[i/8] & 1 << (~i&7))) + '0';
