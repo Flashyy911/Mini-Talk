@@ -6,21 +6,16 @@
 /*   By: asbai-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 23:37:52 by asbai-el          #+#    #+#             */
-/*   Updated: 2019/11/04 18:31:31 by asbai-el         ###   ########.fr       */
+/*   Updated: 2021/06/19 14:04:42 by asbai-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../Headers/libft.h"
-#include <stdio.h>
-
-int	ft_atoi(const char *str)
+#include "libft.h"
+long long	ft_atoi(const char *str)
 {
-	unsigned int	nbr;
-	int				mult;
+	long long		nbr;
 	int				i;
 	int				sign;
 
-	mult = 1;
 	nbr = 0;
 	i = 0;
 	sign = 1;
@@ -35,7 +30,7 @@ int	ft_atoi(const char *str)
 		i++;
 	while (ft_isdigit(str[i]) == 1 && str[i])
 	{
-		nbr = (nbr * 10) + ((int)(str[i]) - 48);
+		nbr = (nbr * 10) + ((str[i]) - 48);
 		i++;
 	}
 	return (nbr * sign);

@@ -6,110 +6,87 @@
 /*   By: asbai-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 19:33:54 by asbai-el          #+#    #+#             */
-/*   Updated: 2019/11/04 18:49:01 by asbai-el         ###   ########.fr       */
+/*   Updated: 2021/06/20 14:27:09 by asbai-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdlib.h>
 
-#include <stdio.h>
-#include "../Headers/libft.h"
-
-static void				ft_clear(char **tab, int size)
+static int	unleah(char **str, int size)
 {
-	int i;
-
-	i = 0;
-	if (size < 0)
-		while (i <= size)
-			free(tab[i++]);
-	free(tab);
+	while (size--)
+		free(str[size]);
+	return (-1);
 }
 
-static	int				ft_tabsize(char const *s, int c)
+static int	count_words(const char *str, char charset)
 {
-	int i;
-	int len;
+	int	i;
+	int	words;
 
+	words = 0;
 	i = 0;
-	len = 0;
-	while (s[i])
+	while (str[i] != '\0')
 	{
-		if (s[i] == c && s[i + 1] != c && s[i + 1])
-			len++;
+		if ((str[i + 1] == charset || str[i + 1] == '\0') == 1
+			&& (str[i] == charset || str[i] == '\0') == 0)
+			words++;
 		i++;
 	}
-	if (len == 0 && s[0] != c && s[0])
-		len++;
-	return (len);
+	return (words);
 }
 
-static char				**ft_taballoc(char const *s, int tab_size)
+static void	write_word(char *dest, const char *from, char charset)
+{
+	int	i;
+
+	i = 0;
+	while ((from[i] == charset || from[i] == '\0') == 0)
+	{
+		dest[i] = from[i];
+		i++;
+	}
+	dest[i] = '\0';
+}
+
+static int	write_split(char **split, const char *str, char charset)
 {
 	int		i;
 	int		j;
-	int		s_len;
-	char	**tab;
+	int		word;
 
+	word = 0;
 	i = 0;
-	j = 0;
-	s_len = ft_strlen(s);
-	if (!(tab = malloc(sizeof(char*) * tab_size + 1)))
+	while (str[i] != '\0')
 	{
-		ft_clear(tab, 0);
-		return (NULL);
-	}
-	tab[tab_size + 1] = 0;
-	while (i <= tab_size)
-	{
-		if (!(tab[i] = malloc(s_len + 1)))
-		{
-			ft_clear(tab, i);
-			return (NULL);
-		}
-		i++;
-	}
-	return (tab);
-}
-
-static void				ft_fill(char const *s, int c, char **tab)
-{
-	int i;
-	int j;
-	int k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	while (s[i])
-		if (s[i] == c)
-		{
-			if (s[i - 1] != c && i > 0)
-				tab[j++][k] = '\0';
-			while (s[i + 1] == c)
-				i++;
+		if ((str[i] == charset || str[i] == '\0') == 1)
 			i++;
-			k = 0;
-		}
 		else
-			tab[j][k++] = s[i++];
+		{
+			j = 0;
+			while ((str[i + j] == charset || str[i + j] == '\0') == 0)
+				j++;
+			split[word] = (char *)malloc(sizeof(char) * (j + 1));
+			if (!split[word])
+				return (unleah(split, word - 1));
+			write_word(split[word], str + i, charset);
+			i += j;
+			word++;
+		}
+	}
+	return (0);
 }
 
-char					**ft_split(char const *s, char c)
+char	**ft_split(const char *str, char c)
 {
-	char	**tab;
-	int		i;
-	int		j;
-	int		k;
+	char	**res;
+	int		words;
 
-	if (s == NULL)
+	words = count_words(str, c);
+	res = (char **)malloc(sizeof(char *) * (words + 1));
+	if (!res)
 		return (NULL);
-	k = 0;
-	j = 0;
-	i = 0;
-	if (!(tab = ft_taballoc(s, ft_tabsize(s, c))))
-	{
+	res[words] = 0;
+	if (write_split(res, str, c) == -1)
 		return (NULL);
-	}
-	ft_fill(s, c, tab);
-	tab[ft_tabsize(s, c)] = NULL;
-	return (tab);
+	return (res);
 }

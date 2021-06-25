@@ -6,11 +6,11 @@
 /*   By: asbai-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 18:26:33 by asbai-el          #+#    #+#             */
-/*   Updated: 2019/10/27 19:33:22 by asbai-el         ###   ########.fr       */
+/*   Updated: 2021/06/19 15:14:31 by asbai-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Headers/libft.h"
+#include "libft.h"
 
 void	ft_putchar_fd(char c, int fd)
 {

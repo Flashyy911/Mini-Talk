@@ -3,37 +3,34 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
+#include "libft/libft.h"
 
-//  int multi;
- int sum;
+void	my_handler(int signum);
+int		ft_8bits_binary_to_ASCII(int *num);
 
-
-void my_handler(int signum);
-int ft_8bits_binary_to_ASCII(int *num);
-
-int main()
+int	main(void)
 {
-    
-    sum = 0;
-    ft_putnbr(getpid());
-    ft_putchar('\n');
-    signal(SIGUSR1, my_handler);
-    signal(SIGUSR2, my_handler);
-    while(1)
-      pause();
+	ft_putnbr(getpid());
+	ft_putchar('\n');
+	signal(SIGUSR1, my_handler);
+	signal(SIGUSR2, my_handler);
+	while (1)
+		pause();
+	return (0);
 }
 
-void my_handler(int signum)
+void	my_handler(int signum)
 {
-    static int multi = 128;
-    
-    if (signum == SIGUSR1)
-       sum = sum + (1 * multi);        
-    multi /=2;
-    if (multi == 0)
-    {
-        ft_putchar((char)sum);
-        multi = 128;
-        sum = 0;
-    }
+	static int	sum = 0;
+	static int	multi = 128;
+
+	if (signum == SIGUSR1)
+		sum = sum + (1 * multi);
+	multi /= 2;
+	if (multi == 0)
+	{
+		ft_putchar((char)sum);
+		multi = 128;
+		sum = 0;
+	}
 }

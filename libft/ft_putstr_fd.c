@@ -6,15 +6,15 @@
 /*   By: asbai-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 19:15:33 by asbai-el          #+#    #+#             */
-/*   Updated: 2019/10/27 19:33:38 by asbai-el         ###   ########.fr       */
+/*   Updated: 2021/06/19 15:08:09 by asbai-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Headers/libft.h"
+#include "libft.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int i;
+	int	i;
 
 	if (s != NULL)
 	{
